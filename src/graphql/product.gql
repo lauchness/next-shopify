@@ -1,0 +1,5 @@
+query product($slug: String!) {
+  product(handle: $slug) {
+    ...ProductDetails
+  }
+}

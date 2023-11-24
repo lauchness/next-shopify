@@ -1,0 +1,29 @@
+fragment ProductCard on Product {
+  id
+  title
+  handle
+  priceRange {
+    ...PriceRange
+  }
+  productType
+  compareAtPriceRange {
+    ...PriceRange
+  }
+  featuredImage {
+    url
+    altText
+  }
+  availableForSale
+  totalInventory
+  variants(first: 1) {
+    nodes {
+      id
+    }
+  }
+  collections(first: 10) {
+    nodes {
+      id
+      handle
+    }
+  }
+}

@@ -1,0 +1,41 @@
+fragment ProductDetails on Product {
+  id
+  title
+  description
+  descriptionHtml
+  handle
+  priceRange {
+    ...PriceRange
+  }
+  productType
+  compareAtPriceRange {
+    ...PriceRange
+  }
+  images(first: 10) {
+    nodes {
+      url
+      altText
+    }
+  }
+  availableForSale
+  totalInventory
+  variants(first: 1) {
+    nodes {
+      id
+    }
+  }
+  dropId: metafield(namespace: "custom", key: "drop_id") {
+    value
+  }
+  collections(first: 10) {
+    nodes {
+      id
+      handle
+      products(first: 3) {
+        nodes {
+          ...ProductCard
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,5 @@
+query cartList($id: ID!) {
+  cart(id: $id) {
+    ...Cart
+  }
+}

@@ -1,0 +1,9 @@
+mutation createCart($userId: String!) {
+  cartCreate(
+    input: { metafields: [{ key: "userId", value: $userId, type: "string" }] }
+  ) {
+    cart {
+      ...Cart
+    }
+  }
+}

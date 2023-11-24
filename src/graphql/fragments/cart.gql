@@ -1,0 +1,64 @@
+fragment CartLine on BaseCartLine {
+  id
+  quantity
+  cost {
+    totalAmount {
+      ...Money
+    }
+    subtotalAmount {
+      ...Money
+    }
+  }
+  merchandise {
+    ... on ProductVariant {
+      id
+      sku
+      availableForSale
+      quantityAvailable
+      image {
+        url
+        altText
+      }
+      product {
+        title
+      }
+    }
+  }
+}
+
+fragment Cart on Cart {
+  id
+  checkoutUrl
+  totalQuantity
+  note
+  cost {
+    totalAmount {
+      ...Money
+    }
+    subtotalAmount {
+      ...Money
+    }
+    totalTaxAmount {
+      ...Money
+    }
+    checkoutChargeAmount {
+      ...Money
+    }
+    totalDutyAmount {
+      ...Money
+    }
+  }
+  attributes {
+    key
+    value
+  }
+  metafields(identifiers: [{ key: "userId" }]) {
+    key
+    value
+  }
+  lines(first: 100) {
+    nodes {
+      ...CartLine
+    }
+  }
+}

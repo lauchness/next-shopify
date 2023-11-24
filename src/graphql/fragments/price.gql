@@ -1,0 +1,13 @@
+fragment Money on MoneyV2 {
+  amount
+  currencyCode
+}
+
+fragment PriceRange on ProductPriceRange {
+  minVariantPrice {
+    ...Money
+  }
+  maxVariantPrice {
+    ...Money
+  }
+}
