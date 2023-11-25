@@ -7,8 +7,11 @@ export const prefetchCartAppRouter = async (
   userId: string
 ) => {
   const query = await getCartAppRouter(userId);
-  await queryClient.prefetchQuery({
-    queryKey: CART_QUERY_KEY(userId),
-    queryFn: () => query,
-  });
+
+  if (query) {
+    await queryClient.prefetchQuery({
+      queryKey: CART_QUERY_KEY(userId),
+      queryFn: () => query,
+    });
+  }
 };

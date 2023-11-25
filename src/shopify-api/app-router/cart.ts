@@ -2,7 +2,7 @@ import { CartFragment } from "@/graphql/_generated/operations";
 
 import { CART_COOKIE } from "../config";
 import { cookies } from "next/headers";
-import { createCart, queryCart } from "../cart";
+import { queryCart } from "../cart";
 
 export const getCartAppRouter = async (
   userId: string
@@ -12,26 +12,15 @@ export const getCartAppRouter = async (
   const __cart = cookieStore.get(CART_COOKIE(userId))?.value;
 
   if (!__cart) {
-    const mutation = await createCart(userId);
-    const cart = mutation.cartCreate?.cart;
+    return null;
+  }
 
-    if (cart) {
-      cookieStore.set(CART_COOKIE(userId), cart.id, {
-        maxAge: 10 * 365 * 24 * 3_600,
-      });
+  const query = await queryCart(__cart);
+  const cart = query.cart;
 
-      return cart;
-    } else {
-      return null;
-    }
+  if (cart) {
+    return cart;
   } else {
-    const query = await queryCart(__cart);
-    const cart = query.cart;
-
-    if (cart) {
-      return cart;
-    } else {
-      return null;
-    }
+    return null;
   }
 };

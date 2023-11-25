@@ -19,7 +19,7 @@ export const isCartFragment = (cart: unknown): cart is CartFragment => {
 
 export const createCart = async (userId: string | undefined) => {
   const cartCreateVariables: CreateCartMutationVariables = {
-    userId: userId || "",
+    userId: userId || "guest",
   };
 
   return await shopifyClient<CreateCartMutation>({

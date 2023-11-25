@@ -8,9 +8,9 @@ export const Cart: FC = () => {
   const { data } = useCart();
 
   return (
-    <Link className="text-lg relative my-2" href="/cart">
+    <Link className="text-lg relative flex items-center gap-1.5" href="/cart">
       Cart
-      <span className="relative bg-white text-black rounded-full h-5 min-w-[20px]">
+      <span className="bg-white text-black rounded-full h-5 min-w-[20px] text-sm flex items-center justify-center">
         {data?.totalQuantity}
       </span>
     </Link>
