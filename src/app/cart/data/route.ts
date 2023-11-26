@@ -9,7 +9,7 @@ export async function GET(
   context: { params?: { userId: string } }
 ) {
   const cookieStore = cookies();
-  const userId = context.params?.userId ?? "guest"; // '1'
+  const userId = context.params?.userId ?? ""; // '1'
 
   const cart = await getCartAppRouter(userId);
 

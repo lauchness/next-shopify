@@ -1,6 +1,7 @@
-import { CartLink } from "@/components/cart-link";
-import { ProductsList } from "@/components/products-list";
+import { Cart } from "@/components/cart";
+
 import { prefetchCartAppRouter } from "@/shopify-api/app-router/react-query";
+import { CART_QUERY_KEY } from "@/shopify-api/config";
 import { prefetchProducts } from "@/shopify-api/react-query";
 
 import {
@@ -9,7 +10,7 @@ import {
   dehydrate,
 } from "@tanstack/react-query";
 
-export default async function Home() {
+export default async function CartPage() {
   const queryClient = new QueryClient();
 
   const userId = await new Promise<string>((resolve, reject) => {
@@ -17,19 +18,12 @@ export default async function Home() {
   }); // get user ID from your auth system
 
   await prefetchCartAppRouter(queryClient, userId);
-  await prefetchProducts(queryClient);
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      <main className="flex min-h-screen flex-col p-6">
-        <h1 className="text-2xl sm:text-4xl font-semibold">My Shopify Shop</h1>
-
-        <CartLink />
-
-        <div className="flow-root mt-8">
-          <h2 className="text-xl font-semibold">My Products</h2>
-          <ProductsList />
-        </div>
+      <main>
+        <h1 className="text-2xl sm:text-4xl font-semibold">My Cart</h1>
+        <Cart />
       </main>
     </HydrationBoundary>
   );

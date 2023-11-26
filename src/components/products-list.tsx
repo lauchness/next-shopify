@@ -3,6 +3,7 @@
 import { PRODUCTS_QUERY_KEY } from "@/shopify-api/config";
 import { fetchProducts } from "@/shopify-api/products";
 import { useAddToCart } from "@/shopify-api/useCart";
+import formatCurrency from "@/utils/currency";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import clsx from "clsx";
 import Link from "next/link";
@@ -31,10 +32,10 @@ export const ProductsList: FC = () => {
           className="relative flex flex-col gap-4 border border-neutral-400 px-4 py-6 text-neutral-400"
         >
           <span className="body-16 order-2">
-            {product.priceRange.maxVariantPrice.amount.toLocaleString("en-US", {
-              style: "currency",
-              currency: product.priceRange.maxVariantPrice.currencyCode,
-            })}
+            {formatCurrency(
+              product.priceRange.maxVariantPrice.amount,
+              product.priceRange.maxVariantPrice.currencyCode
+            )}
           </span>
           <div className="relative z-0 aspect-[304/240] order-3">
             <img

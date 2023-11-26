@@ -1,18 +1,45 @@
 "use client";
 
-import { useCart } from "@/shopify-api/useCart";
-import Link from "next/link";
+import { useCart, useRemoveFromCart } from "@/shopify-api/useCart";
 import { FC } from "react";
+import { CartLine } from "./cart-line";
+import formatCurrency from "@/utils/currency";
 
-export const Cart: FC = () => {
-  const { data } = useCart();
+interface CartProps {}
+
+export const Cart: FC<CartProps> = ({}) => {
+  const { data: cart } = useCart();
+  const removeItems = useRemoveFromCart();
 
   return (
-    <Link className="text-lg relative flex items-center gap-1.5" href="/cart">
-      Cart
-      <span className="bg-white text-black rounded-full h-5 min-w-[20px] text-sm flex items-center justify-center">
-        {data?.totalQuantity}
-      </span>
-    </Link>
+    <div className="flex flex-col w-full">
+      <div className="flex w-full flex-col gap-2">
+        {cart?.lines.nodes.map((line) => {
+          return (
+            <CartLine
+              line={line}
+              key={line.id}
+              removeItem={() => {
+                removeItems.mutate({ lineIds: [line.id] });
+              }}
+            />
+          );
+        })}
+      </div>
+
+      <div className="flex w-full items-center justify-between text-neutral-20">
+        <span className="font-semibold">Total</span>
+        <span>
+          {formatCurrency(
+            cart?.cost.subtotalAmount.amount,
+            cart?.cost.subtotalAmount.currencyCode
+          )}
+        </span>
+      </div>
+
+      <a href={cart?.checkoutUrl} className="self-end">
+        Checkout on Shopify
+      </a>
+    </div>
   );
 };

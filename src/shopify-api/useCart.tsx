@@ -12,7 +12,7 @@ import { isCartFragment } from "./cart";
 import { CART_QUERY_KEY } from "./config";
 
 export const fetchCart = async (userId: string) => {
-  const res = await fetch(`/api/cart?userId=${userId}`, {
+  const res = await fetch(`/cart/data?userId=${userId}`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
@@ -56,7 +56,7 @@ export const useAddToCart = () => {
       productId: string;
       quantity: number;
     }) => {
-      const res = await fetch("/cart/add", {
+      const res = await fetch("/cart/data/add", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -94,7 +94,7 @@ export const useRemoveFromCart = () => {
   const userId = ""; // get user ID from your auth system
   return useMutation({
     mutationFn: async ({ lineIds }: { lineIds: string[] }) => {
-      const res = await fetch("/cart/remove", {
+      const res = await fetch("/cart/data/remove-lines", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -137,8 +137,8 @@ export const useCartUpdateLines = () => {
     }: {
       lines: UpdateCartLinesMutationVariables["lines"];
     }) => {
-      const res = await fetch("/cart/update-lines", {
-        method: "POST",
+      const res = await fetch("/cart/data/update-lines", {
+        method: "PUT",
         headers: {
           "Content-Type": "application/json",
         },
