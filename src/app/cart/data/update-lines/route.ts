@@ -13,16 +13,14 @@ interface UpdateLinesRequest {
   lines: UpdateCartLinesMutationVariables["lines"];
 }
 
-const isUpdateLinesRequest = (req: any): req is UpdateLinesRequest => {
-  return (
-    typeof req === "object" && req.lines && typeof Array.isArray(req.lines)
-  );
+const isUpdateLinesRequest = (json: any): json is UpdateLinesRequest => {
+  return typeof json === "object" && json.lines && Array.isArray(json.lines);
 };
 
 export async function PUT(request: Request) {
   const json = await request.json();
 
-  if (!isUpdateLinesRequest(request)) {
+  if (!isUpdateLinesRequest(json)) {
     return NextResponse.json(
       { error: "Invalid request body" },
       { status: 400 }

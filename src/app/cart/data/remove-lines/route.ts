@@ -16,15 +16,13 @@ interface RemoveFromCartRequest {
 }
 
 const isRemoveFromCartRequest = (req: any): req is RemoveFromCartRequest => {
-  return (
-    typeof req === "object" && req.lineIds && typeof Array.isArray(req.lineIds)
-  );
+  return typeof req === "object" && req.lineIds && Array.isArray(req.lineIds);
 };
 
 export async function DELETE(request: Request) {
   const json = await request.json();
 
-  if (!isRemoveFromCartRequest(request)) {
+  if (!isRemoveFromCartRequest(json)) {
     return NextResponse.json(
       { error: "Invalid request body" },
       { status: 400 }

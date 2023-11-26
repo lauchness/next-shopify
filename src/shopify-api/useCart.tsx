@@ -95,7 +95,7 @@ export const useRemoveFromCart = () => {
   return useMutation({
     mutationFn: async ({ lineIds }: { lineIds: string[] }) => {
       const res = await fetch("/cart/data/remove-lines", {
-        method: "POST",
+        method: "DELETE",
         headers: {
           "Content-Type": "application/json",
         },
@@ -142,10 +142,12 @@ export const useCartUpdateLines = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ lines, userId }),
+        body: JSON.stringify({ lines }),
       });
 
       const json = await res.json();
+
+      console.log("json", json);
 
       const cartLinesUpdate =
         json.data as UpdateCartLinesMutation["cartLinesUpdate"];
