@@ -37,7 +37,10 @@ export const Cart: FC<CartProps> = ({}) => {
         </span>
       </div>
 
-      <a href={cart?.checkoutUrl} className="self-end">
+      <a
+        href={cart?.checkoutUrl}
+        className="self-end border border-neutral-20 w-full py-1 px-2 my-2"
+      >
         Checkout on Shopify
       </a>
     </div>
