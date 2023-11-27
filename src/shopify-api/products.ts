@@ -8,7 +8,7 @@ import { shopifyClient } from "./shopify";
 
 export const fetchProducts = async ({ pageParam }: { pageParam: unknown }) => {
   const res = await fetch(
-    `/api/products${pageParam ? `?after=${pageParam}` : ""}`,
+    `/products${pageParam ? `?after=${pageParam}` : ""}`,
     {
       method: "GET",
       headers: {

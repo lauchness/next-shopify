@@ -5,11 +5,13 @@ import { FC } from "react";
 import { CartLine } from "./cart-line";
 import formatCurrency from "@/utils/currency";
 
-interface CartProps {}
+interface CartProps {
+  pagesRouter?: boolean;
+}
 
-export const Cart: FC<CartProps> = ({}) => {
+export const Cart: FC<CartProps> = ({ pagesRouter = false }) => {
   const { data: cart } = useCart();
-  const removeItems = useRemoveFromCart();
+  const removeItems = useRemoveFromCart(pagesRouter);
 
   return (
     <div className="flex flex-col w-full">
@@ -22,6 +24,7 @@ export const Cart: FC<CartProps> = ({}) => {
               removeItem={() => {
                 removeItems.mutate({ lineIds: [line.id] });
               }}
+              pagesRouter={pagesRouter}
             />
           );
         })}

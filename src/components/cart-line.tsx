@@ -9,15 +9,20 @@ import clsx from "clsx";
 interface CartLineProps {
   line: CartLineFragment;
   removeItem: () => void;
+  pagesRouter?: boolean;
 }
 
-export const CartLine: FC<CartLineProps> = ({ line, removeItem }) => {
+export const CartLine: FC<CartLineProps> = ({
+  line,
+  removeItem,
+  pagesRouter = false,
+}) => {
   const [quantity, setQuantity] = useState(line.quantity);
   const [hint, setHint] = useState("");
   const queryClient = useQueryClient();
   const image = line.merchandise.image;
   const availableQuantity = line.merchandise.quantityAvailable ?? undefined;
-  const updateLines = useCartUpdateLines();
+  const updateLines = useCartUpdateLines(pagesRouter);
 
   const pending = updateLines.isPending;
 

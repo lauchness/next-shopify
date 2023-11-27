@@ -9,8 +9,14 @@ import clsx from "clsx";
 import Link from "next/link";
 import { FC } from "react";
 
-export const ProductsList: FC = () => {
-  const addToCart = useAddToCart();
+interface ProductsListProps {
+  pagesRouter?: boolean;
+}
+
+export const ProductsList: FC<ProductsListProps> = ({
+  pagesRouter = false,
+}) => {
+  const addToCart = useAddToCart(pagesRouter);
   const { data, hasNextPage, fetchNextPage, isFetchingNextPage } =
     useInfiniteQuery({
       queryKey: PRODUCTS_QUERY_KEY,

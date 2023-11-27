@@ -1,8 +1,6 @@
 import { Cart } from "@/components/cart";
 
 import { prefetchCartAppRouter } from "@/shopify-api/app-router/react-query";
-import { CART_QUERY_KEY } from "@/shopify-api/config";
-import { prefetchProducts } from "@/shopify-api/react-query";
 
 import {
   HydrationBoundary,

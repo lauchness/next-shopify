@@ -11,13 +11,18 @@ import {
 import { isCartFragment } from "./cart";
 import { CART_QUERY_KEY } from "./config";
 
-export const fetchCart = async (userId: string) => {
-  const res = await fetch(`/cart/data?userId=${userId}`, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
+export const fetchCart = async (userId: string, pagesRouter?: boolean) => {
+  const res = await fetch(
+    `${pagesRouter ? "/api/" : ""}/cart${
+      pagesRouter ? "" : "/data"
+    }?userId=${userId}`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
 
   const json = await res.json();
 
@@ -30,7 +35,7 @@ export const fetchCart = async (userId: string) => {
   return cart;
 };
 
-export const useCart = () => {
+export const useCart = (pagesRouter?: boolean) => {
   const userId = ""; // get user ID from your auth system
 
   return useQuery({
@@ -38,14 +43,14 @@ export const useCart = () => {
     queryFn: async ({ queryKey }) => {
       const [, userId] = queryKey;
 
-      return await fetchCart(userId);
+      return await fetchCart(userId, pagesRouter);
     },
     // Maybe you don't want to get a cart unless you have a user id?
     // enabled: !!userId,
   });
 };
 
-export const useAddToCart = () => {
+export const useAddToCart = (pagesRouter?: boolean) => {
   const queryClient = useQueryClient();
   const userId = ""; // get user ID from your auth system
   return useMutation({
@@ -56,13 +61,16 @@ export const useAddToCart = () => {
       productId: string;
       quantity: number;
     }) => {
-      const res = await fetch("/cart/data/add", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ productId, quantity, userId }),
-      });
+      const res = await fetch(
+        `${pagesRouter ? "/api/" : ""}/cart${pagesRouter ? "/" : "/data/"}add`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ productId, quantity }),
+        }
+      );
 
       const json = await res.json();
 
@@ -89,18 +97,23 @@ export const useAddToCart = () => {
   });
 };
 
-export const useRemoveFromCart = () => {
+export const useRemoveFromCart = (pagesRouter?: boolean) => {
   const queryClient = useQueryClient();
   const userId = ""; // get user ID from your auth system
   return useMutation({
     mutationFn: async ({ lineIds }: { lineIds: string[] }) => {
-      const res = await fetch("/cart/data/remove-lines", {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ lineIds, userId }),
-      });
+      const res = await fetch(
+        `${pagesRouter ? "/api/" : ""}/cart${
+          pagesRouter ? "/" : "/data/"
+        }remove-lines`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ lineIds }),
+        }
+      );
 
       const json = await res.json();
 
@@ -128,7 +141,7 @@ export const useRemoveFromCart = () => {
   });
 };
 
-export const useCartUpdateLines = () => {
+export const useCartUpdateLines = (pagesRouter?: boolean) => {
   const queryClient = useQueryClient();
   const userId = ""; // get user ID from your auth system
   return useMutation({
@@ -137,17 +150,20 @@ export const useCartUpdateLines = () => {
     }: {
       lines: UpdateCartLinesMutationVariables["lines"];
     }) => {
-      const res = await fetch("/cart/data/update-lines", {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ lines }),
-      });
+      const res = await fetch(
+        `${pagesRouter ? "/api/" : ""}/cart${
+          pagesRouter ? "/" : "/data/"
+        }/update-lines`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ lines }),
+        }
+      );
 
       const json = await res.json();
-
-      console.log("json", json);
 
       const cartLinesUpdate =
         json.data as UpdateCartLinesMutation["cartLinesUpdate"];
