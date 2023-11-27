@@ -17,6 +17,7 @@ interface RemoveFromCartRequest extends NextApiRequest {
 const isRemoveFromCartRequest = (req: any): req is RemoveFromCartRequest => {
   return (
     typeof req === "object" &&
+    req !== null &&
     req.body &&
     req.body.lineIds &&
     Array.isArray(req.body.lineIds)

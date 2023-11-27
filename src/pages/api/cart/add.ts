@@ -18,6 +18,7 @@ interface AddToCartRequest extends NextApiRequest {
 const isAddToCartRequest = (req: any): req is AddToCartRequest => {
   return (
     typeof req === "object" &&
+    req !== null &&
     req.body &&
     req.body.productId &&
     typeof req.body.productId === "string" &&

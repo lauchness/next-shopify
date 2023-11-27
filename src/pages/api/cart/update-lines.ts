@@ -17,6 +17,7 @@ interface UpdateLinesRequest extends NextApiRequest {
 const isUpdateLinesRequest = (req: any): req is UpdateLinesRequest => {
   return (
     typeof req === "object" &&
+    req !== null &&
     req.body &&
     req.body.lines &&
     Array.isArray(req.body.lines)
