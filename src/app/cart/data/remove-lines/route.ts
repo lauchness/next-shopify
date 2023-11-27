@@ -15,8 +15,13 @@ interface RemoveFromCartRequest {
   lineIds: string[];
 }
 
-const isRemoveFromCartRequest = (req: any): req is RemoveFromCartRequest => {
-  return typeof req === "object" && req.lineIds && Array.isArray(req.lineIds);
+const isRemoveFromCartRequest = (json: any): json is RemoveFromCartRequest => {
+  return (
+    typeof json === "object" &&
+    json &&
+    json.lineIds &&
+    Array.isArray(json.lineIds)
+  );
 };
 
 export async function DELETE(request: Request) {

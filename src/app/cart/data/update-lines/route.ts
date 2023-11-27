@@ -14,7 +14,9 @@ interface UpdateLinesRequest {
 }
 
 const isUpdateLinesRequest = (json: any): json is UpdateLinesRequest => {
-  return typeof json === "object" && json.lines && Array.isArray(json.lines);
+  return (
+    typeof json === "object" && json && json.lines && Array.isArray(json.lines)
+  );
 };
 
 export async function PUT(request: Request) {

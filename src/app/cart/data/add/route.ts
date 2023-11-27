@@ -15,6 +15,7 @@ interface AddToCartRequest {
 const isAddToCartRequest = (json: any): json is AddToCartRequest => {
   return (
     typeof json === "object" &&
+    json &&
     json.productId &&
     typeof json.productId === "string" &&
     json.quantity &&
