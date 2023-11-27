@@ -49,4 +49,4 @@ DO NOT use this project - it's a jumping off point for ideas.
 
 DO use [Shopify Hydrogen](https://hydrogen.shopify.dev/) if you can - if you can't and for some awful reason have to shim a shopify store into an existing NextJS project, take these ideas.
 
-Please, for the love of software, do NOT clone/fork this project and use it as a starting point. That would make the author sad.
+PLEASE, for the love of software, DO NOT clone/fork this project and use it as a starting point. That would make the author sad.
